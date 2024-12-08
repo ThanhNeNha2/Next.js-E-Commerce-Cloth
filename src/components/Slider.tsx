@@ -32,6 +32,7 @@ const Slider = () => {
   const [current, setCurrent] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
+      //  hàm này là hàm lặp đi lặp lại nên chỉ cần check set cho nó giá trị là được
       setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 3000);
 
@@ -47,9 +48,11 @@ const Slider = () => {
         {slides.map((slide) => (
           <div
             key={slide.id}
+            // nếu ở giao diện xl ( lớn nhất ) sẽ set theo chiều ngang còn ngược lại là chiều dọc
             className={`${slide.bg} w-screen h-full flex flex-col gap-16 xl:flex-row`}
           >
             {/* TEXT CONTAINER */}
+            {/* nếu ở giao diện xl ( lớn nhất ) chiều rộng sẽ là 1/2 và chiều cao là full còn ngược lại bất kì dao diện nào chiều cao điều là 1/2  */}
             <div className="h-1/2 xl:w-1/2  xl:h-full   flex flex-col items-center justify-center gap-8 2xl:gap-12 text-center">
               <h2 className="text-xl lg:text-3xl 2xl:text-5xl ">
                 {" "}
@@ -66,6 +69,7 @@ const Slider = () => {
               </Link>
             </div>
             {/* IMAGE CONTAINER */}
+            {/* nếu ở giao diện xl ( lớn nhất ) chiều rộng sẽ là 1/2 và chiều cao là full còn ngược lại bất kì dao diện nào chiều cao điều là 1/2  */}
             <div className=" h-1/2 xl:w-1/2 xl:h-full  relative">
               <Image
                 src={slide.img}
@@ -81,9 +85,9 @@ const Slider = () => {
       <div className="absolute m-auto left-1/2 bottom-8 flex gap-4">
         {slides.map((slide, index) => (
           <div
-            className={`w-3 h-3  rounded-full ring-1 ring-gray-600 cursor-pointer flex items-center justify-center ${
-              current === index ? "scale-150" : ""
-            }`}
+            className={`w-3 h-3  rounded-full ring-1 ring-gray-600 cursor-pointer flex items-center justify-center
+// nếu current === index nghĩa là khi nó chạy tới cái nào thì cục này hiện to ra so với kích thước bình thường 
+               ${current === index ? "scale-150" : ""}`}
             key={slide.id}
             onClick={() => setCurrent(index)}
           >
