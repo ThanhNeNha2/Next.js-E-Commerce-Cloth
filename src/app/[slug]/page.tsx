@@ -28,46 +28,39 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
       {/* TEXTS  */}
       <div className="w-full lg:w-1/2 flex flex-col gap-6">
         <h1 className="text-4xl font-medium "> {product.name} </h1>
-        <p className=" text-gray-500">{product.description}</p>
+        <p
+          className="text-gray-500"
+          dangerouslySetInnerHTML={{
+            __html: product.description || "",
+          }}
+        ></p>
         <hr />
         {/* <div className="h-[2px] bg-gray-100" /> */}
-        <div className="flex items-center gap-4 ">
-          <span className="text-xl text-gray-500 line-through">$59</span>
-          <p className="font-medium text-2xl">$49</p>
-        </div>
+        {product.price?.price === product.price?.discountedPrice ? (
+          <span className="text-xl text-gray-500 line-through">
+            ${product.price?.price}
+          </span>
+        ) : (
+          <div className="flex items-center gap-4 ">
+            <span className="text-xl text-gray-500 line-through">
+              ${product.price?.price}
+            </span>
+            <p className="font-medium text-2xl">
+              ${product.price?.discountedPrice}
+            </p>
+          </div>
+        )}
         {/* <div className="h-[2px] bg-gray-100"/> */}
         <hr />
         <CustomizeProducts />
         <Add />
         <div className="h-[2px] bg-gray-100" />
-        <div className="text-sm">
-          <h4 className="font-medium mb-4">Title</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            doloremque saepe ad culpa libero suscipit? Vero libero at, optio
-            temporibus labore voluptatibus soluta eligendi, velit omnis eaque
-            debitis iusto perferendis.
-          </p>
-        </div>
-        <div className="text-sm">
-          <h4 className="font-medium mb-4">Title</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            doloremque saepe ad culpa libero suscipit? Vero libero at, optio
-            temporibus labore voluptatibus soluta eligendi, velit omnis eaque
-            debitis iusto perferendis.
-          </p>
-        </div>
-        <div className="text-sm">
-          <h4 className="font-medium mb-4">Title</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis
-            doloremque saepe ad culpa libero suscipit? Vero libero at, optio
-            temporibus labore voluptatibus soluta eligendi, velit omnis eaque
-            debitis iusto perferendis.
-          </p>
-        </div>
-        a
+        {product.additionalInfoSections?.map((section: any) => (
+          <div className="text-sm" key={section.title}>
+            <h4 className="font-medium mb-4">{section.title}</h4>
+            <p dangerouslySetInnerHTML={{ __html: section.description }}></p>
+          </div>
+        ))}
       </div>
     </div>
   );
