@@ -7,14 +7,17 @@ import DOMPurify from "isomorphic-dompurify";
 const ProductList = async ({
   categoryId,
   limit,
+  searchParams,
 }: {
   categoryId: string;
   limit?: number;
+  searchParams?: any;
 }) => {
   const wixClient = await wixClientServer();
 
   const res = await wixClient.products
     .queryProducts()
+    // dựa theo cái id của mỗi project mà lấy cái này lấy theo collectionIds với id là categoryId ( được truyển qua )
     .eq("collectionIds", categoryId)
     .limit(limit || 20)
     .find();
